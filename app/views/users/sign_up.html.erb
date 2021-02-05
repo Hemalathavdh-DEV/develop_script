@@ -1,0 +1,17 @@
+<div class="sign_form">
+  <h1>Sign Up</h1>
+   <div class="form-group" >
+	  <%= form_with model: @user, url: "/create", method: :post, local: true do |f| %>
+	    <p> Username:</br> <%= f.text_field :user_name, class: "form-control"%> </p>
+	    <p> Email:</br> <%= f.text_field :email,autocomplete: "off",  class: "form-control"%> </p>
+	    <p> Password:</br> <%= f.password_field :encrypted_password, autocomplete: "off", class: "form-control",  required: true,"data-parsley-errors-container"=>".credential_box", "data-parsley-minlength" => "8", "data-parsley-trigger"=>"change", "data-parsley-required-message"=>"Please enter a password", "data-parsley-minlength-message"=>"Password must be 8 or more characters"%></p>
+	    <%= fields_for :product, @user.products do |product_form| %>
+    		<%= product_form.text_field :title %>
+  		<% end %>
+	    <%= f.submit :Signup %>
+	  <% end %>
+	</div>
+</div>
+
+<script>
+</script>
