@@ -15,6 +15,6 @@ class User < ApplicationRecord
 	end
 
 	def self.encryption(password)
-		Digest::SHA1.hexdigest("#{password}")
+		Digest::MD5.hexdigest("#{password}")
 	end
 end
