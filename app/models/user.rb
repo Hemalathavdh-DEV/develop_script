@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-	has_many :products
+	has_many :products, dependent: :destroy
+	has_many :categories, through: :products
 	accepts_nested_attributes_for :products
 	validates :user_name, presence: { message: " Enter the username " }
 	validates :email, presence: { message: "Enter the email" }

@@ -1,3 +1,22 @@
 <%= link_to 'Back', root_path%>
 <%= link_to 'Sign Up', sign_up_path%>
-
+  <table id="lead_list" class="libra-bootstrap-table casestable">
+	<thead>
+	<tr>
+	  <th>ProjectTitle</th>
+	  <th>Username</th>
+	  <th>CategoryaAme</th>
+	</tr>
+	</thead>
+	<tbody>
+		<% if @users.present? %>
+			<% @users.each do |user| %>
+				<tr>
+					<td>
+						<% user.user_name %>
+					</td>
+				</tr>
+			<% end %>
+		<% else %>
+		<% end %>
+	</tbody>

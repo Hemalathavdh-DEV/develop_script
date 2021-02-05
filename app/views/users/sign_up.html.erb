@@ -5,9 +5,14 @@
 	    <p> Username:</br> <%= f.text_field :user_name, class: "form-control"%> </p>
 	    <p> Email:</br> <%= f.text_field :email,autocomplete: "off",  class: "form-control"%> </p>
 	    <p> Password:</br> <%= f.password_field :encrypted_password, autocomplete: "off", class: "form-control",  required: true, "data-parsley-minlength" => "8", "data-parsley-trigger"=>"change", "data-parsley-required-message"=>"Please enter a password", "data-parsley-minlength-message"=>"Password must be 8 characters"%></p>
-	    <%#= fields_for :product, @user.products do |product_form| %>
-    		<%#= product_form.text_field :title  %>
-  		<%# end %>
+	    <%= f.fields_for :product, @user.products.build do |product_form| %>
+	    	<%= product_form.label :title, "Enter Product Title" %>
+    		<%= product_form.text_field :title  %>
+  		<% end %>
+  		<%= f.fields_for :category, @user.categories.build do |category_form| %>
+	    	<%= category_form.label :name, "Enter Category Name" %>
+    		<%= category_form.text_field :name  %>
+  		<% end %>
 	    <%= f.submit :Signup %>
 	  <% end %>
 	</div>
