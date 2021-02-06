@@ -2,7 +2,18 @@ class UsersController < ApplicationController
 	def index
 		# user = User.find_by(user_name: params["user_name"])
 		# if user.present?
-		@users = User.includes(:products, :categories)
+		@sort_item = params["sortItem"]
+		case @sort_item
+		when "category"
+			@users =  User.order('categories.name')
+		when "username"
+			@users =  User.order(username: :asc)
+		when "project"
+			@users = User.order('product.title')
+		else
+			@users = User.order(id: :desc)
+		end
+		# @users = users #.paginate(page: params["page"], per_page: 2)
 		# else
 		# 	flash["error"] = "Username doesn't exist"
 		# 	redirect_back fallback_location: ""

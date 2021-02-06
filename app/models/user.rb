@@ -8,7 +8,7 @@ class User < ApplicationRecord
 	validates :email, uniqueness: { message: "Email already exists" }
 	validates :encrypted_password, length: { in: 1..8}
 	before_save :password_encryption
-
+	default_scope { includes(:products, :categories) }
 
 	def password_encryption
 		encrypt_password = User.encryption(self.encrypted_password)

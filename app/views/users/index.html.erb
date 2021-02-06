@@ -1,23 +1,66 @@
-<%= link_to 'Back', root_path%>
-<%= link_to 'Sign Up', sign_up_path%>
-  <table>
-	<thead>
-	<tr>
-	  <th>ProjectTitle</th>
-	  <th>Username</th>
-	  <th>CategoryName</th>
-	</tr>
-	</thead>
-	<tbody>
-		<% if @users.present? %>
-			<% @users.each do |user| %>
-				<tr>
-					<td>
-						<%= user.user_name %>
-					</td>
-				</tr>
-			<% end %>
-		<% else %>
-		<% end %>
-	</tbody>
-</table>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+</head>
+<body>
+  <!-- <form action="/action_page.php"> -->
+  <label for="sort_by">SortBy</label>
+  <select id="items" name="items">
+    <option value="recent">Recent Projects</option>
+    <option value="category">Category Name</option>
+    <option value="username">Username</option>
+    <option value="project">Project Title</option>
+  </select>
+ 
+<!-- </form> -->
+  <table id="users_list"class="table table-striped table-bordered" style="width:100%">
+    <thead>
+      <tr><th class="ProjectName">ProjectName </th><th> UserName</th>
+      <th>CategoryName</th>
+    </thead>
+    <tbody>
+      <% if @users.present? %>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.products.project_title %></td>
+            <td><%= user.user_name %></td>
+            <td><%= user.categories.category_name %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr><td>No Data found</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+  </div>
+ <!--  <div class="col-md-12 text-center">
+      <div class="filter-paginate">
+        <%#= link_to_previous_page @users, '<i class="fa fa-fw ml-arrow-left" aria-hidden="true"></i>'.html_safe %>
+        <%#= will_paginate @users, left: 1, window: 2, right: 1 %>
+        <%#= link_to_next_page @users, '<i class="fa fa-fw ml-arrow-right" aria-hidden="true"></i>'.html_safe %>
+      </div>
+    </div> -->
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+  <script>
+  $(function(){
+    $("#users_list").dataTable({
+      "lengthMenu": [2,4,6,8]
+    });
+  })
+  $("#items").change(function () {
+    debugger
+    var item = $(this).val();
+      $.ajax({
+      url: "/index",
+      method: 'GET',
+      data: {
+        sortItem: item,
+      },
+      success: function (data) {
+      }
+    });
+    });
+  </script>
+</body>
+</html>
