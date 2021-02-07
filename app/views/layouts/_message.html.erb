@@ -1,0 +1,24 @@
+<% flash.each do |type, message| %>
+  <% case type %>
+    <% when "notice" %>
+      <script type="text/javascript">
+        toastr.info("<%= message %>");
+      </script>
+    <% when "success" %>
+      <script type="text/javascript">
+        toastr.success("<%= message %>");
+      </script>
+    <% when "error" %>
+      <script type="text/javascript">
+        toastr.error("<%= message %>");
+      </script>
+    <% when "warning" %>
+      <script type="text/javascript">
+          toastr.warning("<%= message %>");
+        </script>
+    <% when "alert" %>
+      <script type="text/javascript">
+        toastr.alert("<%= message %>");
+      </script>
+  <% end %>
+<% end %>

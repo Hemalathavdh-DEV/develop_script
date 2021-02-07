@@ -1,22 +1,68 @@
-<div class="sign_form">
-  <h1>Sign Up</h1>
-   <div class="form-group" >
-	  <%= form_with model: @user, url: "/create", method: :post, local: true do |f| %>
-	    <p> Username:</br> <%= f.text_field :user_name, class: "form-control"%> </p>
-	    <p> Email:</br> <%= f.text_field :email,autocomplete: "off",  class: "form-control"%> </p>
-	    <p> Password:</br> <%= f.password_field :encrypted_password, autocomplete: "off", class: "form-control",  required: true, "data-parsley-minlength" => "8", "data-parsley-trigger"=>"change", "data-parsley-required-message"=>"Please enter a password", "data-parsley-minlength-message"=>"Password must be 8 characters"%></p>
-	    <%= f.fields_for :product, @user.products.build do |product_form| %>
-	    	<%= product_form.label :title, "Enter Product Title" %>
-    		<%= product_form.text_field :title  %>
-  		<% end %>
-  		<%= f.fields_for :category, @user.categories.build do |category_form| %>
-	    	<%= category_form.label :name, "Enter Category Name" %>
-    		<%= category_form.text_field :name  %>
-  		<% end %>
-	    <%= f.submit :Signup %>
-	  <% end %>
-	</div>
-</div>
+<!DOCTYPE html>
+<html>
+	<body>
 
-<script>
+		<div class="sign_form">
+		  <h1>Sign Up</h1>
+		   <div class="form-group">
+			  <%= form_with model: @user, url: "/create", method: :post, local: true, :class => 'sign_up_form' do |form| %>
+			   <div class="form-group">
+          		<label for="exampleInputEmail1">Username</label><br>
+			    <%= form.text_field :user_name,autocomplete: "off", class: "form-control"%>
+			   </div>
+			    <p> Email:</br> <%= form.text_field :email,autocomplete: "off",  class: "form-control"%> </p>
+			    <p> Password:</br> <%= form.password_field :encrypted_password, autocomplete: "off", class: "form-control"%>
+			    <span style="color:red;" id="passwordValidate"></span></p>
+			    <%= form.fields_for :products, @user.products.build do |product_form| %>
+			    	<%= product_form.label :title, "Enter Product Title" %><br>
+		    		<%= product_form.text_field :title  %>
+		  		<% end %>
+		  		<%#= link_to_add_fields "Add", form, :products %>
+		  		<p>
+			  		<%= form.fields_for :categories, @user.categories.build do |category_form| %>
+				    	<%= category_form.label :name, "Enter Category Name" %><br>
+			    		<%= category_form.text_field :name  %>
+			  		<% end %>
+		  		</p>
+			    <p><%= form.submit :SignUp, class: "submit"%></p>
+			  <% end %>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	//Validation for password length not greater than 8
+	$('#user_encrypted_password').keyup(function (e){
+		var passVal = $(this).val().length
+		$('#passwordValidate').text(checkLength(passVal))
+	})
+
+	function checkLength(passVal){
+		if (passVal < 8) {
+			result(true)
+			return "Please enter 8 characters"
+
+		}
+		else if (passVal > 8){
+			result(true)
+			return "Please enter only 8 characters"
+		}
+		else{
+			result(false)
+			return ""
+		}
+		
+	}
+
+	function result(resultVal){
+		if (resultVal== true){
+			$(".submit").attr("disabled", true);
+		}
+		else{
+			$(".submit").attr("disabled", false);
+		}
+	}
+
 </script>
