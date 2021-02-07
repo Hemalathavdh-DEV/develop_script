@@ -10,10 +10,12 @@
           		<label for="exampleInputEmail1">Username</label><br>
 			    <%= form.text_field :user_name,autocomplete: "off", class: "form-control"%>
 			   </div>
-			    <p> Email:</br> <%= form.text_field :email,autocomplete: "off",  class: "form-control"%> </p>
+			    <p> Email:</br> <%= form.text_field :email,autocomplete: "off",  class: "form-control", style: 'text-transform: lowercase;'%> 
+			    	<span style="color:red;" id="emailValidate"></span></p>
+
 			    <p> Password:</br> <%= form.password_field :encrypted_password, autocomplete: "off", class: "form-control"%>
 			    <span style="color:red;" id="passwordValidate"></span></p>
-			    <%= form.fields_for :products, @user.products.build do |product_form| %>
+			    <%= form.fields_for :products, @user.products.new do |product_form| %>
 			    	<%= product_form.label :title, "Enter Product Title" %><br>
 		    		<%= product_form.text_field :title  %>
 		  		<% end %>
@@ -37,6 +39,19 @@
 	$('#user_encrypted_password').keyup(function (e){
 		var passVal = $(this).val().length
 		$('#passwordValidate').text(checkLength(passVal))
+	})
+
+	//Validation for email
+	$('#user_email').keyup(function (e){
+		var re = /^\w+([-+.'][^\s]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+		var emailFormat = re.test($(this).val());
+		if (emailFormat) {
+			result(false)
+			$("#emailValidate").text("")
+		}else{
+			result(true)
+			$("#emailValidate").text("Please enter a valid email address")
+		}
 	})
 
 	function checkLength(passVal){

@@ -15,12 +15,16 @@
   </select>
  
 <!-- </form> -->
-  <table id="users_list"class="table table-striped table-bordered" style="width:100%">
+<div class="container">
+  <table id="users_list"class="users_list_index display" style="width:100%">
     <thead>
-      <tr><th class="ProjectName">ProjectName </th><th> UserName</th>
-      <th>CategoryName</th>
+      <tr>
+        <th class="ProjectName">ProjectName </th>
+        <th> UserName</th>
+        <th>CategoryName</th>
+      </tr>
     </thead>
-    <tbody>
+    <tbody class="table_body_list">
       <% if @users.present? %>
         <% @users.each do |user| %>
           <tr>
@@ -34,24 +38,16 @@
       <% end %>
     </tbody>
   </table>
-  </div>
- <!--  <div class="col-md-12 text-center">
-      <div class="filter-paginate">
-        <%#= link_to_previous_page @users, '<i class="fa fa-fw ml-arrow-left" aria-hidden="true"></i>'.html_safe %>
-        <%#= will_paginate @users, left: 1, window: 2, right: 1 %>
-        <%#= link_to_next_page @users, '<i class="fa fa-fw ml-arrow-right" aria-hidden="true"></i>'.html_safe %>
-      </div>
-    </div> -->
+</div>
   <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
   <script>
   $(function(){
     $("#users_list").dataTable({
-      "lengthMenu": [2,4,6,8]
+      "lengthMenu": [2,4,6,8,100]
     });
   })
   $("#items").change(function () {
-    debugger
     var item = $(this).val();
       $.ajax({
       url: "/index",

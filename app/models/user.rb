@@ -7,7 +7,7 @@ class User < ApplicationRecord
 	validates :email, presence: { message: "Enter the email" }
 	validates :user_name, uniqueness: { message: "Username already exists" }
 	validates :email, uniqueness: { message: "Email already exists" }
-	validates :encrypted_password, length: { in: 1..8}
+	validates :encrypted_password, presence: {message: "Enter password"}
 	before_save :password_encryption
 
 	#password encryption
