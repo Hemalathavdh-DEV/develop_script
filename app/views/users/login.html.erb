@@ -1,10 +1,10 @@
 <div class="login_form">
 	<h1>Sign In</h1>
-	<%= form_with url: "/index", method: :get, local: true do |form| %>
+	<%= form_with url: "/redirect_login_page", method: :get, local: :true do |form| %>
 	  <%= form.label :user_name, "Username" %><br>
-	  <%= form.text_field :user_name %><br><br>
+	  <%= form.text_field :user_name, auto_complete: false  %><br><br>
 	  <%= form.label :password, "Enter password" %><br>
-	  <%= form.password_field :password %><br><br>
+	  <%= form.password_field :password, auto_complete: false, maxlength: 8 %><br><br>
 	  <%= form.submit "Login"%>
   	<% end %>
   	<%= link_to 'Sign Up', sign_up_path%>

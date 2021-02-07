@@ -2,8 +2,6 @@ class UsersController < ApplicationController
 
 	#lists the users
 	def index
-		# user = User.find_by(user_name: params["user_name"])
-		# if user.present?
 		@sort_item = params["sortItem"]
 		user = User.includes(:products, :categories)
 		case @sort_item
@@ -16,18 +14,25 @@ class UsersController < ApplicationController
 		else
 			@users = user.order(updated_at: :desc)
 		end
-		# @users = users #.paginate(page: params["page"], per_page: 2)
-		# else
-		# 	flash["error"] = "Username doesn't exist"
-		# 	redirect_back fallback_location: ""
-		# end
+		return @users
 	end
 
 	def sign_up
 		@user = User.new
 	end
 
+	#root url
 	def login
+	end
+
+	def redirect_login_page
+		login_user = User.find_by(user_name: params["user_name"])
+			if login_user.present? && login_user.valid_password?(params["password"])
+				redirect_to '/index'
+			else
+				flash["error"] = "Username/password is invalid"
+				redirect_back fallback_location: ""
+			end
 	end
 
 	#creates users

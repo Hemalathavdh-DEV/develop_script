@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+	# Include default devise modules. Others available are:
+	# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+	devise :database_authenticatable, :registerable,
+	     :recoverable, :rememberable, :validatable
+
 	has_many :products, dependent: :destroy
 	has_many :categories, through: :products
 	accepts_nested_attributes_for :products, allow_destroy: true
@@ -8,7 +13,7 @@ class User < ApplicationRecord
 	validates :user_name, uniqueness: { message: "Username already exists" }
 	validates :email, uniqueness: { message: "Email already exists" }
 	validates :encrypted_password, presence: {message: "Enter password"}
-	before_save :password_encryption
+	# before_save :password_encryption
 
 	#password encryption
 	def password_encryption
